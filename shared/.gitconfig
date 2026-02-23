@@ -1,0 +1,31 @@
+[user]
+	name = Beebee
+	email = beebee@beebee.bot
+
+[init]
+	defaultBranch = main
+
+[core]
+	autocrlf = input
+	excludesfile = ~/.gitignore_global
+
+[pull]
+	rebase = false
+
+[push]
+	autoSetupRemote = true
+
+[alias]
+	st = status
+	co = checkout
+	br = branch
+	cm = commit -m
+	ca = commit --amend
+	lg = log --oneline --graph --decorate --all
+	last = log -1 HEAD
+	unstage = reset HEAD --
+	undo = reset --soft HEAD~1
+	aliases = config --get-regexp alias
+
+[color]
+	ui = auto

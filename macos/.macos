@@ -1,0 +1,105 @@
+#!/usr/bin/env zsh
+
+# Beebee's macOS sensible defaults
+# Run once on a fresh machine (or re-run safely — all idempotent)
+
+# Close System Settings to avoid conflicts
+osascript -e 'tell application "System Settings" to quit'
+
+echo "Applying macOS defaults..."
+
+####################################
+# Security
+
+# Enable Firewall
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsigned on
+
+# Require password immediately after sleep or screen saver
+defaults write com.apple.screensaver askForPassword -int 1
+defaults write com.apple.screensaver askForPasswordDelay -int 0
+
+####################################
+# Keyboard & Input
+
+# Enable full keyboard navigation (tab through all controls)
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+
+# Disable smart quotes and dashes (they break code)
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+
+# Disable auto-correct
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+
+# Key repeat: fast
+defaults write NSGlobalDomain KeyRepeat -int 2
+defaults write NSGlobalDomain InitialKeyRepeat -int 15
+
+# Non-breaking space fix (Option+Space → regular space)
+mkdir -p ~/Library/KeyBindings
+cat > ~/Library/KeyBindings/DefaultKeyBinding.dict <<EOF
+{
+"~ " = ("insertText:", " ");
+}
+EOF
+
+####################################
+# Appearance
+
+# Auto dark/light mode
+defaults write NSGlobalDomain AppleInterfaceStyleSwitchesAutomatically -bool true
+
+####################################
+# Finder
+
+# Show all filename extensions
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+# Show status bar and path bar
+defaults write com.apple.finder ShowStatusBar -bool true
+defaults write com.apple.finder ShowPathbar -bool true
+
+# Keep folders on top when sorting by name
+defaults write com.apple.finder _FXSortFoldersFirst -bool true
+
+# Default to list view
+defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+
+# Disable .DS_Store on network/USB volumes
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+
+####################################
+# Dock
+
+# Auto-hide the Dock
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock autohide-delay -float 0
+defaults write com.apple.dock autohide-time-modifier -float 0.5
+
+# Don't show recent apps in Dock
+defaults write com.apple.dock show-recents -bool false
+
+####################################
+# Screen
+
+# Save screenshots to ~/Desktop/Screenshots
+mkdir -p ~/Desktop/Screenshots
+defaults write com.apple.screencapture location -string "~/Desktop/Screenshots"
+
+# Save screenshots as PNG
+defaults write com.apple.screencapture type -string "png"
+
+# Disable screenshot shadow
+defaults write com.apple.screencapture disable-shadow -bool true
+
+####################################
+# Wrap up
+
+# Restart affected apps
+for app in "Finder" "Dock" "SystemUIServer"; do
+  killall "$app" &> /dev/null || true
+done
+
+echo "Done. Some changes require a logout/reboot to take effect."

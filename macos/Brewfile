@@ -1,0 +1,29 @@
+# Beebee's Brewfile
+# Install with: brew bundle
+
+# Core
+brew "gh"               # GitHub CLI
+brew "node"             # Node.js
+brew "python@3.13"      # Python
+brew "ripgrep"          # Fast search (rg)
+brew "uv"               # Fast Python package manager
+
+# Media / utilities
+brew "ffmpeg"           # Video/audio processing
+
+# OpenClaw ecosystem skills
+brew "gemini-cli"       # Gemini AI CLI
+brew "gifgrep"          # GIF search
+brew "gogcli"           # Google Workspace CLI
+brew "goplaces"         # Google Places CLI
+brew "imsg"             # iMessage CLI
+brew "memo"             # Apple Notes CLI
+brew "peekaboo"         # macOS UI automation
+brew "songsee"          # Audio visualization
+brew "summarize"        # URL/content summarizer
+
+# Casks
+cask "google-chrome"
+cask "visual-studio-code"
+cask "1password"
+cask "1password-cli"

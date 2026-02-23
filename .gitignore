@@ -1,0 +1,6 @@
+.DS_Store
+*.bak
+*.local
+.env
+*.log
+Brewfile.lock.json
