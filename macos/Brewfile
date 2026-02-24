@@ -22,6 +22,9 @@ brew "peekaboo"         # macOS UI automation
 brew "songsee"          # Audio visualization
 brew "summarize"        # URL/content summarizer
 
+# Fonts
+cask "font-meslo-lg-nerd-font"
+
 # Casks
 cask "google-chrome"
 cask "visual-studio-code"

@@ -3,6 +3,14 @@
 # macOS only — this is a Mac Mini, not a server farm
 #------------------
 
+#------------------
+# Powerlevel10k instant prompt
+# Must be FIRST — before any output or sourcing
+#------------------
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 SHARED_DIR="$(cd "$(dirname "$(readlink -f "${(%):-%N}")")" && pwd)"
 DOTFILES_DIR="$SHARED_DIR/.."
 ZPLUG_HOME="$HOME/.zplug"
@@ -33,14 +41,6 @@ export PATH="/usr/local/sbin:$PATH"
 # VS Code CLI
 if [ -d "/Applications/Visual Studio Code.app/Contents/Resources/app/bin" ]; then
     export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-fi
-
-#------------------
-# Powerlevel10k instant prompt
-# Must be near the top — before any output
-#------------------
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 #------------------
