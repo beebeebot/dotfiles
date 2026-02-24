@@ -128,15 +128,6 @@ fi
 #------------------
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-#------------------
-# Beebee p10k colour — orange, obviously
-#------------------
-typeset -g POWERLEVEL9K_DIR_BACKGROUND=#FF5A36
-typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND=#8FF570
-typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=#E664A6
-typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=#8FF570
-typeset -g POWERLEVEL9K_VCS_CONFLICTED_BACKGROUND=#E664A6
-typeset -g POWERLEVEL9K_VCS_LOADING_BACKGROUND=#E3E2E8
 
 #------------------
 # Scripts
