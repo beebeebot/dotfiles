@@ -133,3 +133,45 @@ fi
 # Scripts
 #------------------
 source $SHARED_DIR/scripts/github-backup.zsh
+
+# OpenClaw Completion
+source "/Users/beebee/.openclaw/completions/openclaw.zsh"
+export PATH=$PATH:$HOME/.maestro/bin
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/Users/beebee/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# TUI wrapped in tmux — survives SSH disconnects from iPad etc.
+# Reattaches to existing session or starts fresh
+tui() {
+  tmux attach -t tui 2>/dev/null || tmux new -s tui 'openclaw tui --session main'
+}
+
+# bun completions
+[ -s "/Users/beebee/.bun/_bun" ] && source "/Users/beebee/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# age secrets
+secret() {
+  age -d -i ~/.config/age/keys.txt ~/Dropbox/Droids/secrets/"$1".age
+}
+
+secrets() {
+  find ~/Dropbox/Droids/secrets -name "*.age" | sed "s|$HOME/Dropbox/Droids/secrets/||;s|\.age$||" | sort
+}
+
+secret-add() {
+  local recipient=$(age-keygen -y ~/.config/age/keys.txt 2>/dev/null)
+  mkdir -p "$(dirname ~/Dropbox/Droids/secrets/"$2".age)"
+  echo -n "$1" | age -r "$recipient" -o ~/Dropbox/Droids/secrets/"$2".age
+  echo "✅ Saved $2"
+}
